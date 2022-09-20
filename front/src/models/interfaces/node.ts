@@ -1,4 +1,4 @@
-export interface ComponentData {
+export interface NodeData {
     id: string
     type: string
     content: string
@@ -7,8 +7,8 @@ export interface ComponentData {
     timeOut: number
 }
 
-export interface ComponentInterface {
-    data: ComponentData
+export interface NodeInterface {
+    data: NodeData
     drag: () => void
     resize: () => void
     delete: () => void

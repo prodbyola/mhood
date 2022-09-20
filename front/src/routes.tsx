@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
-import SignIn from './containers/SignIn'
-import Dashboard from './containers/dashboard/Dashboard'
+import SignIn from './pages/SignIn'
+import Dashboard from './pages/dashboard/Dashboard'
+import DashboardOverview from "./pages/dashboard/Overview";
+import CreateCampaign from "./pages/dashboard/CreateCampaign";
 
 export const router = createBrowserRouter([
     {
@@ -9,6 +11,16 @@ export const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <Dashboard></Dashboard>
+        element: <Dashboard />,
+        children: [
+            {
+                path: 'overview',
+                element: <DashboardOverview />
+            },
+            {
+                path: 'campaigns/create',
+                element: <CreateCampaign />
+            },
+        ]
     }
 ]) 

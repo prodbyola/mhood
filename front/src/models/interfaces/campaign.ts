@@ -1,12 +1,19 @@
+import { NodeData, NodeInterface } from "./node"
+
+export type SourceType = 'Direct Upload' | 'Youtube' | 'Vimeo'
+
 export interface CampaignData {
     id: string
     title: string
     slug: string
-    srcType: 'manual' | 'youtube' | 'vimeo'
+    srcType?: SourceType
     src: string
+    nodeData: NodeData[]
 }
 
 export interface CampaignInterface {
-    data: CampaignData
+    data?: CampaignData
+    nodes: NodeInterface[]
+    addNode: (node: NodeData) => void
     save: () => void
 }
