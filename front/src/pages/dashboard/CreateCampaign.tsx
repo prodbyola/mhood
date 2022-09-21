@@ -10,6 +10,8 @@ import { useState } from "react";
 
 import SelectSource from "./components/create-camp/SelectSource";
 import UploadVideo from "./components/create-camp/UploadVideo";
+import ApiSource from "./components/create-camp/ApiSource";
+import CampaignDetails from "./components/create-camp/CampaignDetails";
 
 export default function CreateCampaign(){
     const palette = theme.palette
@@ -32,10 +34,36 @@ export default function CreateCampaign(){
 
     const navTo = (nav: 'prev' | 'next') => {
         if(step===1 && !newCamp.srcType) return
+        if(step===3 && nav === 'next') return // remove this line soon
 
         let to = step+1
         if(nav==='prev') to =step-1
+
         navigateStep(to)
+    }
+
+    const Header = (): string => {
+        const srcType = newCamp.srcType
+        let h = 'Choose Your Source Type'
+        if(step === 2){
+            if(srcType === 'Direct Upload') h = 'Upload Your Video File' 
+            else h = `Enter ${srcType} URL or Search ${srcType} videos`
+        } else if (step === 3) {
+            h = "Enter campaign details"
+        }
+
+        return h
+    }
+
+    const Selector = () => {
+        if(step === 2){
+            if(newCamp.srcType === 'Direct Upload') return <UploadVideo />
+            else return <ApiSource />
+        } else if(step === 3) {
+            return <CampaignDetails />
+        } else {
+            return <SelectSource updateSrc={updateCampValue} />
+        }
     }
     
     return (
@@ -52,7 +80,7 @@ export default function CreateCampaign(){
                 className={"title step-"+step}
                 variant="h3" 
             >
-                Choose Your Video Source
+                { Header() }
             </Typography>
             <Grid 
                 container 
@@ -62,11 +90,7 @@ export default function CreateCampaign(){
                     my: 2
                 }}
             >
-                {
-                    newCamp.srcType === 'Direct Upload' && step === 2 
-                    ? <UploadVideo />
-                    : <SelectSource updateSrc={updateCampValue} />
-                }
+                { Selector() }
             </Grid>
             <Box className="action-box">
                 {

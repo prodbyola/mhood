@@ -12,7 +12,7 @@ export default function SelectSource(props: {updateSrc: (key: keyof CampaignData
 
     const selections = [
         { label: 'Direct Upload', icon: 'fa-solid:upload' },
-        { label: 'Youtube', icon: 'fa-brands:youtube' },
+        { label: 'YouTube', icon: 'fa-brands:youtube' },
         { label: 'Vimeo', icon: 'fa-brands:vimeo-square' },
     ]
 

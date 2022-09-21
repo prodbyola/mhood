@@ -1,6 +1,6 @@
 import { NodeData, NodeInterface } from "./node"
 
-export type SourceType = 'Direct Upload' | 'Youtube' | 'Vimeo'
+export type SourceType = 'Direct Upload' | 'YouTube' | 'Vimeo'
 
 export interface CampaignData {
     id: string

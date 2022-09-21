@@ -2,6 +2,19 @@
 
 $upload_icon: 180px;
 $selector_icon: 130px;
+$result_img: 50px;
+
+@mixin wrapped_flex {
+    display: inline-flex;
+    justify-content: space-between;
+    column-gap: 12px;
+    width: 100%;
+}
+
+@mixin box_border {
+    border: 3px solid white;
+    border-radius: 4px;
+}
 
 .create-camp-content {
     .title {
@@ -69,13 +82,13 @@ $selector_icon: 130px;
     }
 
     .upload-box {
+        @include box_border();
         display: inline-flex;
         width: 100%;
         height: 304px;
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
-        border: 3px solid white;
         color: white;
         border-radius: 8px;
         cursor: pointer;
@@ -93,13 +106,11 @@ $selector_icon: 130px;
         }
     }
 
-    .preview {
-        display: inline-flex;
-        justify-content: space-between;
-        column-gap: 12px;
-        width: 100%;
+    .upload-preview {
+        @include wrapped_flex();
 
         .preview-player {
+            @include box_border();
             width: auto;
             height: 250px;
         }
@@ -138,7 +149,70 @@ $selector_icon: 130px;
 
     }
 
+    .api-selector {
+        @include wrapped_flex();
+
+        .apc {
+            width: 50%;
+        }
+
+        .yt-frame {
+            @include box_border();
+            width: 100%;
+        }
+
+        .result-area {
+            overflow-y: auto;
+            max-height: 240px;
+            padding: 0 14px;
+
+            .result-box {
+                display: flex;
+                padding: 4px 16px;
+                column-gap: 12px;
+                margin-bottom: 8px;
+                cursor: pointer;
+                transition: transform 0.3s;
     
+                .img {
+                    width: $result_img;
+                    height: $result_img;
+                    background-size: cover;
+                }
+    
+                .meta {
+                    width: 80%;
+                    .m-title{
+                        font-size: 1.15rem;
+                    }
+    
+                    .m-desc {
+                        font-size: 0.9rem;
+                    }
+                }
+            }
+    
+            .result-box:hover {
+                transform: scale(1.02);
+            }
+        }
+
+        .result-area::-webkit-scrollbar {
+            cursor: pointer;
+        }
+
+    }
+
+    .camp-detail-form {
+        width: 100%;
+        padding: 0 20%;
+
+        .field {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+    }
+
     .action-box {
         width: 100%;
         display: flex;
