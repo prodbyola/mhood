@@ -51,10 +51,10 @@ const PreviewPlayer = (props: {src: string, video: File | null, goBack: () => vo
                 </video>
                 <div className="vid-details">
                     {
-                        Object.keys(videoDetails).map((key) => {
+                        Object.keys(videoDetails).map((key, index) => {
                             const value = videoDetails[key as 'name']
                             return (
-                                <div className="vid-meta">
+                                <div key={index} className="vid-meta">
                                     <Typography className="vd-key">{ capitalize(key) }: </Typography>
                                     <Typography className="vd-value ellipsis">{value}</Typography>
                                 </div>
@@ -74,7 +74,7 @@ const PreviewPlayer = (props: {src: string, video: File | null, goBack: () => vo
     )
 }
 
-export default function UploadVideo(){
+export default function UploadVideo(props: { onFileAdded: (file: File | null) => void }){
     const [videoFile, setVideo] = useState<File | null>(null)
     const [demoSrc, setDemoSrc] = useState<string | null>(null)
 
@@ -84,6 +84,7 @@ export default function UploadVideo(){
 
         const url = URL.createObjectURL(file)
         setDemoSrc(url)
+        props.onFileAdded(file)
     }
 
     /** Sets video states (file and src) to null */

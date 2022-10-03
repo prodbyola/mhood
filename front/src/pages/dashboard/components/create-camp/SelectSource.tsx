@@ -3,9 +3,9 @@ import {  Avatar, Typography } from "@mui/material"
 import Grid from "@mui/material/Unstable_Grid2/Grid2"
 import { Icon as Iconify } from "@iconify/react"
 
-import { CampaignData } from "../../../../models/interfaces/campaign";
+import { UpdateCampForm } from "../../../../models/interfaces/campaign";
 
-export default function SelectSource(props: {updateSrc: (key: keyof CampaignData, value: CampaignData[keyof CampaignData]) => void}) {
+export default function SelectSource(props: {updateSrc: UpdateCampForm}) {
     // const iw = 130
     const [selectedSrc, selectSrc] = useState('')
     const [hovered, hover] = useState('')

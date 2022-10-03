@@ -1,4 +1,4 @@
-import { FormEvent, ReactNode, useEffect, useState } from "react";
+import { FormEvent, ReactNode, useState } from "react";
 import {
   FormControl,
   InputLabel,
@@ -13,6 +13,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import SearchIcon from "@mui/icons-material/Search";
 import { theme } from "../../../../theme";
 import getVideoId from "get-video-id";
+import { SourceType } from "../../../../models/interfaces/campaign";
 
 const Input = (props: { label: string; icon: ReactNode, onSearch: (value: string) => void }) => {
   const [value, setValue] = useState('')
@@ -34,11 +35,10 @@ const Input = (props: { label: string; icon: ReactNode, onSearch: (value: string
       }}
       variant="filled"
     >
-      <InputLabel sx={{ color: "white" }} htmlFor="filled-adornment-password">
+      <InputLabel sx={{ color: "white" }}>
         {props.label}
       </InputLabel>
       <FilledInput
-        id="link-input"
         type="url"
         endAdornment={
           <InputAdornment position="end">
@@ -168,65 +168,76 @@ const EmptyBox = (props: {message: string}) => {
   )
 }
 
-export default function ApiSource() {
-    const [query, setQuery] = useState('')
+export default function ApiSource(props: {sourceType?: SourceType, onUpdateSrc: (src: string) => void }) {
     const [apiResults, loadResults] = useState<ResultCompressed[]>([])
     const [videoId, setVideoId] = useState<string | null>(null)
 
+
     const search = (value:string, searchType: 'url' | 'api' = 'api') => {
       if(searchType === 'api'){
-        setQuery(value)
+        if(value && value !== ''){
+          queryApi(value).then(results => loadResults(results))
+        }
+
       } else {
         const { id } = getVideoId(value)
-        setVideoId(id)
+        updateSrc(id as string)
       }
     }
 
-    useEffect(() => {
-      if(query && query !== ''){
-        queryApi(query).then(results => loadResults(results))
-      }
-    })
+    const updateSrc = (src: string) => {
+      setVideoId(src)
+      props.onUpdateSrc(src)
+    }
 
     const Preview = () => {
+      const className = "yt-frame "+props.sourceType
+      let previewFrame = <iframe
+        className={ className }
+        title="yt-src"
+        src={"https://www.youtube.com/embed/"+videoId}
+      />
+      if(props.sourceType === 'Vimeo') previewFrame = <iframe
+        className={ className }
+        title="vimeo-src"
+        src={`https://player.vimeo.com/video/${videoId}`} 
+        frameBorder="0" 
+        allow="autoplay"
+      />
       if(videoId) {
-        return (
-          <iframe
-          className="yt-frame"
-          title="yt-src"
-          height="220"
-          src={"https://www.youtube.com/embed/"+videoId}
-        ></iframe>
-        )
+        return previewFrame
       } else {
         return <EmptyBox message="Nothing to preview. Insert YouTube link above or try searching for a video." />
       }
     }
 
     return (
-        <div className="api-selector">
+        <div className={`api-selector ${props.sourceType}`}>
           <div className="api-preview apc">
               <Input
-                label="Enter YouTube Link"
+                label={`Enter ${props.sourceType} URL`}
                 icon={<ArrowForwardIcon sx={{ color: "white" }} />}
                 onSearch={(link) => search(link, 'url')}
               />
               <Preview />
           </div>
-          <div className="api-search apc">
-              <Input
-                label="Search YouTube"
-                icon={<SearchIcon sx={{ color: "white" }} />}
-                onSearch={search}
-              />
-              <div className="result-area">
-                {
-                  apiResults.length ?
-                  apiResults.map((res, index) => (<ResultBox key={index} result={res} onSelect={setVideoId} />))
-                  : <EmptyBox message="No video results. Use the search box above to get started." />
-                }
-              </div>
-          </div>
+          {
+            props.sourceType === 'YouTube' &&
+            <div className="api-search apc">
+                <Input
+                  label={`Search ${props.sourceType}`}
+                  icon={<SearchIcon sx={{ color: "white" }} />}
+                  onSearch={search}
+                />
+                <div className="result-area">
+                  {
+                    apiResults.length ?
+                    apiResults.map((res, index) => (<ResultBox key={index} result={res} onSelect={updateSrc} />))
+                    : <EmptyBox message="No video results. Use the search box above to get started." />
+                  }
+                </div>
+            </div>
+          }
         </div>
     );
 }

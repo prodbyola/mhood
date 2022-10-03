@@ -25,4 +25,15 @@ export const slugify = (str: string) => {
         .replace(/-+/g, '-'); // collapse dashes
   
     return str;
-  };
+};
+
+export const getNextMonth = (months = 1) => {
+    const date = new Date();
+    const d = date.getDate();
+    date.setMonth(date.getMonth() + +months);
+    
+    if (date.getDate() !== d) {
+        date.setDate(0);
+    }
+    return date;
+};

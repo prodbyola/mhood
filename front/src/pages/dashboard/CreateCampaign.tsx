@@ -4,7 +4,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { theme } from "../../theme"
 
-import { CampaignData, SourceType } from "../../models/interfaces/campaign";
+import { CampFormData, UpdateCampForm, SourceType } from "../../models/interfaces/campaign";
 import { NodeData } from "../../models/interfaces/node";
 import { useState } from "react";
 
@@ -15,26 +15,30 @@ import CampaignDetails from "./components/create-camp/CampaignDetails";
 
 export default function CreateCampaign(){
     const palette = theme.palette
-    const campData: CampaignData = {
+    const campData: CampFormData = {
         id: 'new',
         title: 'New Campaign',
         slug: '',
         srcType: undefined,
         src: '',
-        nodeData: []
+        nodeData: [],
+        file: null
     }
 
     const [newCamp, updateCamp] = useState(campData)
     const [step, navigateStep] = useState(1)
 
-    const updateCampValue = (key: keyof CampaignData, value: CampaignData[keyof CampaignData]) => {
-        newCamp[key] = value as string & (SourceType | undefined) & NodeData[]
+    const updateCampValue: UpdateCampForm = (key, value) => {
+        newCamp[key] = value as string & (SourceType | undefined) & NodeData[] & File
         updateCamp(newCamp)
     }
 
     const navTo = (nav: 'prev' | 'next') => {
         if(step===1 && !newCamp.srcType) return
-        if(step===3 && nav === 'next') return // remove this line soon
+        if(step===3 && nav === 'next') {
+            console.log(newCamp) // we'll send this to the backend
+            return
+        }
 
         let to = step+1
         if(nav==='prev') to =step-1
@@ -57,10 +61,10 @@ export default function CreateCampaign(){
 
     const Selector = () => {
         if(step === 2){
-            if(newCamp.srcType === 'Direct Upload') return <UploadVideo />
-            else return <ApiSource />
+            if(newCamp.srcType === 'Direct Upload') return <UploadVideo onFileAdded={(file) => updateCampValue('file', file)} />
+            else return <ApiSource sourceType={newCamp.srcType} onUpdateSrc={ (id) => updateCampValue('src', id) } />
         } else if(step === 3) {
-            return <CampaignDetails />
+            return <CampaignDetails onValueUpdate={updateCampValue} />
         } else {
             return <SelectSource updateSrc={updateCampValue} />
         }

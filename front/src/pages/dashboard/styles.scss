@@ -159,6 +159,11 @@ $result_img: 50px;
         .yt-frame {
             @include box_border();
             width: 100%;
+            height: 220px;
+        }
+
+        .yt-frame.Vimeo {
+            border: none;
         }
 
         .result-area {
@@ -203,6 +208,14 @@ $result_img: 50px;
 
     }
 
+    .api-selector.Vimeo {
+        justify-content: center;
+
+        .apc {
+            width: 70%;
+        }
+    }
+
     .camp-detail-form {
         width: 100%;
         padding: 0 20%;
@@ -225,5 +238,120 @@ $result_img: 50px;
             border-color: theme.$secondary;
             font-weight: 600;
         }
+    }
+}
+
+$divider_color: theme.$primary;
+$vertical_spacing: 16px;
+
+.campaign-editor {
+    display: flex !important;
+    column-gap: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+
+    .vertical-divider {
+        border-left: solid 1px $divider_color;
+        opacity: 0.6;
+    }
+
+    .editor-toolbar {
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        column-gap: 12px;
+        margin-right: $vertical_spacing;
+
+        .toolbar-icon {
+            font-size: 54px;
+            cursor: pointer;
+            // color: theme.$secondary;
+        }
+    }
+
+    .column1 {
+        width: 64%;
+        padding: 0 $vertical_spacing;
+
+        .components {
+            display: inline-flex;
+            column-gap: 14px;
+            row-gap: 8px;
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 16px;
+
+            .comp {
+                padding: 0 8px;
+                cursor: move;
+            }
+        }
+
+        #video-container {
+            height: 382px;
+            border: 2px solid white;
+
+            #video-player {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .added-nodes {
+            display: flex;
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 8px 0;
+            background-color: rgba(128, 128, 128, 0.233);
+            margin-top: 12px;
+            height: 110px;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            .added-node {
+                display: inline-flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 95%;
+                margin-bottom: 8px;
+                padding: 8px 12px;
+                max-height: 24px;
+                color: rgb(63, 63, 63);
+
+                .node-label {
+                    // text-transform: uppercase;
+                    font-weight: 600;
+                    font-size: 18px;
+                }
+
+                .actions, .time-box {
+                    display: inline-flex;
+                    column-gap: 4px;
+
+                    .icon {
+                        cursor: pointer;
+                    }
+                }
+
+                .time-box {
+                    column-gap: 8px;
+
+                    .time-label {
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+
+    }
+
+    .column2 {
+        display: inline-flex;
+        align-items: center;
+        margin-left: $vertical_spacing;
     }
 }
