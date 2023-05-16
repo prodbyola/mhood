@@ -1,0 +1,27 @@
+
+@media only screen and (max-width: 767px) {
+    .dashboard-items {
+        .dash-item {
+            width: 100% !important;
+        }
+    }
+
+    .items-header {
+        flex-direction: column-reverse;
+    }
+
+    .create-camp-grid {
+        flex-direction: column !important;
+        align-items: center;
+    }
+
+    .desktop {
+        display: none !important;
+    }
+}
+
+@media only screen and (min-width: 767px) {
+    .mobile {
+        display: none !important;
+    }
+}

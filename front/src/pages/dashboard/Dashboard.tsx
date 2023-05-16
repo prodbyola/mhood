@@ -77,9 +77,13 @@ function DashboardContent() {
             >
               Dashboard
             </Typography>
+            <AddIcon 
+              className='mobile'
+              onClick={ () => navigate("/dashboard/campaigns/create") } 
+            />
             <Button 
               variant="outlined" 
-              className='action-btn' 
+              className='action-btn desktop' 
               startIcon={<AddIcon />}
               onClick={ () => navigate("/dashboard/campaigns/create") }
             >

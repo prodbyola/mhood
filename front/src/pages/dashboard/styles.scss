@@ -1,4 +1,5 @@
 @use '../../theme/theme.scss';
+@import './resp.scss';
 
 $upload_icon: 180px;
 $selector_icon: 130px;
@@ -44,6 +45,7 @@ $result_img: 50px;
         }
     }
 }
+
 
 .appbar-actions {
     display: inline-flex;

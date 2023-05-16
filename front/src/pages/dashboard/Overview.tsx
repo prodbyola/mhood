@@ -21,7 +21,7 @@ export default function DashboardOverview(){
                 {
                     demos(6).map(() => (
                         <Card className="dash-item">
-                            <img className="di-thumb" src="/thumbnail.png" />
+                            <img className="di-thumb" src="/thumbnail.png" alt="demo" />
                             <Box sx={{ padding: "8px" }}>
                                 <h3 className="di-title">Campaign Title</h3>
                                 <p>This is a short description of the campaign to easily remind users of what campaign is all about.</p>
