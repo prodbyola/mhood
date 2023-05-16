@@ -19,6 +19,35 @@ import { useNavigate } from 'react-router-dom'
 
 export default function SignIn() {
   const navigate = useNavigate()
+  type AuthType = {
+    type: 'reg' | 'log',
+    text: string,
+    action: string
+  }
+
+  const logType: AuthType = {
+    type: 'log',
+    text: "Don't have an account? Sign Up",
+    action: 'Login'
+  }
+
+  const regType: AuthType = {
+    type: 'reg',
+    text: "Already have an account? Login",
+    action: 'Register'
+  }
+
+  const [authType, setAuthType] = React.useState(logType)
+  const switchAuth = () => {
+    let newAuth = authType
+    if(newAuth.type === 'log') {
+      newAuth = regType
+    } else {
+      newAuth = logType
+    }
+
+    setAuthType(newAuth)
+  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -55,12 +84,20 @@ export default function SignIn() {
                 margin="normal"
                 required
                 fullWidth
+                id="username"
+                label="Username"
+                name="username"
+              />
+              {
+                authType.type === 'reg' ? <TextField
+                margin="normal"
+                required
+                fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
-                autoFocus
-              />
+              /> : null
+              }
               <TextField
                 margin="normal"
                 required
@@ -81,7 +118,7 @@ export default function SignIn() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                { authType.action }
               </Button>
               <Grid container>
                 <Grid item xs>
@@ -90,8 +127,8 @@ export default function SignIn() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                  <Link onClick={switchAuth} variant="body2" sx={{ cursor: 'pointer' }}>
+                    {authType.text}
                   </Link>
                 </Grid>
               </Grid>

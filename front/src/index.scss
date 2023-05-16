@@ -6,14 +6,15 @@
 
 .app-page {
     display: flex !important;
+    flex-wrap: wrap;
     width: 100vh;
-    height: calc(100vh - 140px);
+    min-height: calc(100vh - 140px);
     align-items: center;
 }
 
 .dashboard-page {
     @extend .app-page;
-    height: calc(100vh - 204px);
+    min-height: calc(100vh - 204px);
 }
 
 .ellipsis {

@@ -1,46 +1,36 @@
-// import Grid from '@mui/material/Grid';
-// import Paper from '@mui/material/Paper';
-
-// import Chart from './components/Chart';
-// import Deposits from './components/Deposits';
-// import Orders from './components/Orders';
+import { Box, Card, OutlinedInput } from "@mui/material";
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function DashboardOverview(){
+    const demos = (length: number) => {
+        const arr = []
+        for (let i=0; i < length; i++) {
+            arr.push(i)
+        }
+
+        return arr
+    }
+
     return (
-        // <Grid container spacing={3}>
-        //     {/* Chart */}
-        //     <Grid item xs={12} md={8} lg={9}>
-        //     <Paper
-        //         sx={{
-        //             p: 2,
-        //             display: 'flex',
-        //             flexDirection: 'column',
-        //             height: 240,
-        //         }}
-        //     >
-        //         <Chart />
-        //     </Paper>
-        //     </Grid>
-        //     {/* Recent Deposits */}
-        //     <Grid item xs={12} md={4} lg={3}>
-        //     <Paper
-        //         sx={{
-        //         p: 2,
-        //         display: 'flex',
-        //         flexDirection: 'column',
-        //         height: 240,
-        //         }}
-        //     >
-        //         <Deposits />
-        //     </Paper>
-        //     </Grid>
-        //     {/* Recent Orders */}
-        //     <Grid item xs={12}>
-        //     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-        //         <Orders />
-        //     </Paper>
-        //     </Grid>
-        // </Grid>
-        <div>Data Here</div>
+        <>
+            <div className="items-header">
+                <h3>Recent Campaigns</h3>
+                <OutlinedInput placeholder="Search Campaign" margin="dense" endAdornment={ <SearchIcon /> } sx={{ height: "46px" }} />
+            </div>
+            <div className="dashboard-items">
+                {
+                    demos(6).map(() => (
+                        <Card className="dash-item">
+                            <img className="di-thumb" src="/thumbnail.png" />
+                            <Box sx={{ padding: "8px" }}>
+                                <h3 className="di-title">Campaign Title</h3>
+                                <p>This is a short description of the campaign to easily remind users of what campaign is all about.</p>
+                            </Box>
+                        </Card>
+                    ))
+                }
+                
+            </div>
+        </>
     )
 }
