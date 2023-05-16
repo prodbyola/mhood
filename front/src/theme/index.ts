@@ -3,15 +3,6 @@ import { ThemeOptions } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import cssTheme from './theme.scss'
 
-// export const theme = {
-//     primary: '#EC254E',
-//     secondary: '#FC69AD',
-//     accent: '#7E0699',
-//     accent2: '#E013B6',
-//     light: '#FFFFFF',
-//     link: 'https://coolors.co/ec254e-fc69ad-7e0699-e013b6-ffffff'
-// }
-
 const themeOptions: ThemeOptions = {
   palette: {
     // type: 'light',

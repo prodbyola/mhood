@@ -2,6 +2,8 @@ import { NodeBasicData, NodeData, NodePosition, NodeType } from "../interfaces/n
 import { getNextMonth } from "../../utils";
 
 const transformData = (nodeType: NodeType, data: NodeData): NodeData => {
+    const defaultImgSize = 180;
+
     if(nodeType === 'Countdown Timer'){
         data.content = getNextMonth()
         data.dimension = {
@@ -11,8 +13,8 @@ const transformData = (nodeType: NodeType, data: NodeData): NodeData => {
     } else if(nodeType === 'Image') {
         data.content = '/demo.png'
         data.dimension = {
-            width: 300,
-            height: 300
+            width: defaultImgSize,
+            height: defaultImgSize
         }
     } else if(nodeType === 'CTA') {
         data.content = {

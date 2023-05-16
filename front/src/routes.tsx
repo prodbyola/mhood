@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import SignIn from './pages/SignIn'
+import SignIn from './pages/AuthPage'
 import Dashboard from './pages/dashboard/Dashboard'
 import DashboardOverview from "./pages/dashboard/Overview";
 import CreateCampaign from "./pages/dashboard/CreateCampaign";
@@ -22,10 +22,10 @@ export const router = createBrowserRouter([
                 path: 'campaigns/create',
                 element: <CreateCampaign />
             },
+            {
+                path: 'campaigns/edit/:id',
+                element: <EditCampaign />
+            },
         ]
-    },
-    {
-        path: '/dashboard/campaigns/edit/:id',
-        element: <EditCampaign />
     },
 ]) 

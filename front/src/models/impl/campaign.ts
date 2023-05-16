@@ -41,7 +41,7 @@ export class Campaign implements CampaignInterface {
     addNode(node: NodeBasicData, pos?: {top: number, left: number}){
         const data: NodeData = getDefaults(node, pos)
         
-        // add node data which is later saved in our database
+        // add node data which will later be saved in our database
         if(this.data){
             this.data.nodeData.push(data)
         }
@@ -57,8 +57,6 @@ export class Campaign implements CampaignInterface {
         if(nodeData?.length){
             const index = findNode(node, nodeData, 'data')
             if(index !== 'NotFound') nodeData.splice(index, 1)
-
-            console.log('data ', index)
         }
 
         const nodes = this.nodes

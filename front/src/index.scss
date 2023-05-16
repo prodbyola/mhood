@@ -4,6 +4,18 @@
 
 @import './components/nodes/nodes.scss';
 
+.app-page {
+    display: flex !important;
+    width: 100vh;
+    height: calc(100vh - 140px);
+    align-items: center;
+}
+
+.dashboard-page {
+    @extend .app-page;
+    height: calc(100vh - 204px);
+}
+
 .ellipsis {
     text-overflow: ellipsis;
 

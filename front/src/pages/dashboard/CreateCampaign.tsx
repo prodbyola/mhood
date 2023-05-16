@@ -12,6 +12,7 @@ import SelectSource from "./components/create-camp/SelectSource";
 import UploadVideo from "./components/create-camp/UploadVideo";
 import ApiSource from "./components/create-camp/ApiSource";
 import CampaignDetails from "./components/create-camp/CampaignDetails";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateCampaign(){
     const palette = theme.palette
@@ -25,6 +26,8 @@ export default function CreateCampaign(){
         file: null
     }
 
+  const navigate = useNavigate()
+
     const [newCamp, updateCamp] = useState(campData)
     const [step, navigateStep] = useState(1)
 
@@ -36,7 +39,8 @@ export default function CreateCampaign(){
     const navTo = (nav: 'prev' | 'next') => {
         if(step===1 && !newCamp.srcType) return
         if(step===3 && nav === 'next') {
-            console.log(newCamp) // we'll send this to the backend
+            console.log(newCamp) // we'll send this to the backend and navigate to editor on successful submission
+            navigate('/dashboard/campaigns/edit/new')
             return
         }
 

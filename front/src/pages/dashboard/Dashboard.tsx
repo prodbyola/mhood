@@ -1,26 +1,22 @@
-import * as React from 'react';
 import { styled, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import HomeIcon from '@mui/icons-material/Home';
+import AddIcon from '@mui/icons-material/Add';
+import Button from '@mui/material/Button';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-import { NavBar } from '../../components/navbar'
-
-// import DashboardOverview from './Overview';
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { Copyright } from '../../components/Copyright'
 import { theme } from '../../theme';
+import Avatar from '@mui/material/Avatar';
 
 
 const drawerWidth: number = 240;
@@ -47,43 +43,15 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
-
 function DashboardContent() {
-  const [open, setOpen] = React.useState(true);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+  const avatarSize = 44;
+  const navigate = useNavigate();
 
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar position="absolute">
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -93,13 +61,12 @@ function DashboardContent() {
               edge="start"
               color="inherit"
               aria-label="open drawer"
-              onClick={toggleDrawer}
+              onClick={() => navigate("/dashboard/overview")}
               sx={{
                 marginRight: '36px',
-                ...(open && { display: 'none' }),
               }}
             >
-              <MenuIcon />
+              <HomeIcon sx={{ fontSize: 38 }} />
             </IconButton>
             <Typography
               component="h1"
@@ -110,29 +77,22 @@ function DashboardContent() {
             >
               Dashboard
             </Typography>
+            <Button 
+              variant="outlined" 
+              className='action-btn' 
+              startIcon={<AddIcon />}
+              onClick={ () => navigate("/dashboard/campaigns/create") }
+            >
+              Create Campaign
+            </Button>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+            <Avatar alt="Remy Sharp" src="/user.jpg" sx={{ height: avatarSize, width: avatarSize, cursor: 'pointer', marginLeft: '16px' }} />
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <NavBar />
-        </Drawer>
         <Box
           component="main"
           sx={{
@@ -147,7 +107,9 @@ function DashboardContent() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Outlet />
+            <Container className='dashboard-page'>
+              <Outlet />
+            </Container>
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>

@@ -4,14 +4,10 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Container, Box, Card, TextField } from '@mui/material'
 import { 
     Delete as DeleteIcon, 
-    Edit as EditIcon, 
-    Home as HomeIcon,
-    Save as SaveIcon, 
-    Public as PublicIcon, 
 } from '@mui/icons-material'
+import TuneIcon from '@mui/icons-material/Tune';
 
 import { theme } from '../../theme';
-// import { CampaignInterface } from '../../models/interfaces/campaign';
 import { Campaign } from '../../models/impl/campaign';
 
 import CampComponents from './components/edit-camp/CampNodeIcons'
@@ -19,11 +15,8 @@ import NodeIndex from '../../components/nodes/NodeIndex';
 
 import { NodeBasicData, NodeInterface } from '../../models/interfaces/node';
 import 'vlitejs/dist/vlite.css';
-// import Vlitejs from 'vlitejs';
 
 const Player = (props: {src: string, nodes: NodeInterface[], onDrop?: (e: DragEvent) => void}) => {
-    // const campaign = props.campaign
-    // const campData = campaign.data
 
     return (
         <div 
@@ -55,12 +48,9 @@ export default function EditCampaign(){
             const nd = (e as DragEvent).dataTransfer.getData('newNodeData')
             const nodeData = JSON.parse(nd) as NodeBasicData
             
-            const container = document.getElementById('video-container') as HTMLElement
-            const cRect = container.getBoundingClientRect()
-    
             const position = {
-                top: e.clientY - cRect.top,
-                left: e.clientX - cRect.left
+                top: e.clientY,
+                left: e.clientX,
             }
     
             campaign.addNode(nodeData, position)
@@ -73,26 +63,10 @@ export default function EditCampaign(){
         setNodes(newNodes)
     }
 
-    // new Vlitejs('#player');
-    
-    // useEffect(() => {
-    //     console.log('rendered', campaign.nodes)
-    // }, [campaign])
-
-
     const iconColor = theme.palette.secondary.dark
-    const iconStyle = {
-        color: iconColor
-    }
-
     return (
         <ThemeProvider theme={theme}>
             <Container className="campaign-editor" maxWidth='xl'>
-                <div className='editor-toolbar'>
-                    <HomeIcon className='toolbar-icon' style={iconStyle} />
-                    <PublicIcon className='toolbar-icon' style={iconStyle} />
-                    <SaveIcon className='toolbar-icon' style={iconStyle} />
-                </div>
                 <div className='vertical-divider'></div>
                 <Box className="column1">
                     <CampComponents />
@@ -110,7 +84,7 @@ export default function EditCampaign(){
                                         <div className='time'><span className='time-label'>Time Out:</span> 1:30</div>
                                     </div>
                                     <div className='actions'>
-                                        <EditIcon className='icon' />
+                                        <TuneIcon className='icon' />
                                         <DeleteIcon className='icon' onClick={(e) => alterNodes(e, 'remove', node.data)} />
                                     </div>
                                 </Card>
@@ -122,7 +96,7 @@ export default function EditCampaign(){
                 <Box className="column2" style={{
                     flex: 1
                 }}>
-                    <TextField
+                    { campaign.nodes.length ? <TextField
                         id="camp-content"
                         label="Content"
                         multiline
@@ -132,7 +106,7 @@ export default function EditCampaign(){
                             width: '100%',
                         }}
                         color="secondary"
-                    />
+                    /> : <h3>Drag and drop elements on the video frame to start editing your campaign.</h3> }
                 </Box>
             </Container>
         </ThemeProvider>
